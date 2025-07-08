@@ -3,6 +3,7 @@ const XLSX = require('xlsx');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 4000;
+app.use(require('cors')())
 
 app.use(bodyParser.json());
 
