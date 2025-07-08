@@ -39,14 +39,24 @@ export default function Home() {
 
       <Box sx={{ mb: 4 }}>
         <Typography variant="h6">Par libellé</Typography>
-        <TextField
-          label="Libellé"
-          value={libelle}
-          onChange={e => setLibelle(e.target.value)}
-          size="small"
-          sx={{ mr: 2 }}
-        />
-        <Button variant="contained" onClick={handleSearchLibelle}>Rechercher</Button>
+        <Box sx={{ display: 'flex', alignItems: 'center', background: '#fff', borderRadius: 2, boxShadow: 1, p: 1, maxWidth: 500 }}>
+          <TextField
+            label="Libellé"
+            value={libelle}
+            onChange={e => setLibelle(e.target.value)}
+            size="small"
+            sx={{ flex: 1, background: '#fff' }}
+            InputProps={{ style: { color: '#171717', background: '#fff' } }}
+            InputLabelProps={{ style: { color: '#171717' } }}
+          />
+          <Button
+            variant="contained"
+            onClick={handleSearchLibelle}
+            sx={{ ml: 2, height: '40px', minWidth: '120px', fontWeight: 'bold', background: '#171717', color: '#fff', boxShadow: 'none', '&:hover': { background: '#333' } }}
+          >
+            Rechercher
+          </Button>
+        </Box>
         {result && (
           <Box sx={{ mt: 2 }}>
             {result.error ? (
@@ -62,14 +72,24 @@ export default function Home() {
 
       <Box sx={{ mb: 4 }}>
         <Typography variant="h6">Par famille</Typography>
-        <TextField
-          label="Famille"
-          value={famille}
-          onChange={e => setFamille(e.target.value)}
-          size="small"
-          sx={{ mr: 2 }}
-        />
-        <Button variant="contained" onClick={handleSearchFamille}>Lister</Button>
+        <Box sx={{ display: 'flex', alignItems: 'center', background: '#fff', borderRadius: 2, boxShadow: 1, p: 1, maxWidth: 500 }}>
+          <TextField
+            label="Famille"
+            value={famille}
+            onChange={e => setFamille(e.target.value)}
+            size="small"
+            sx={{ flex: 1, background: '#fff' }}
+            InputProps={{ style: { color: '#171717', background: '#fff' } }}
+            InputLabelProps={{ style: { color: '#171717' } }}
+          />
+          <Button
+            variant="contained"
+            onClick={handleSearchFamille}
+            sx={{ ml: 2, height: '40px', minWidth: '120px', fontWeight: 'bold', background: '#171717', color: '#fff', boxShadow: 'none', '&:hover': { background: '#333' } }}
+          >
+            Rechercher
+          </Button>
+        </Box>
         {familleList.length > 0 && (
           <List sx={{ mt: 2, background: '#f5f5f5', borderRadius: 2 }}>
             {familleList.map((lib, idx) => (
