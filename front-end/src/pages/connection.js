@@ -7,7 +7,7 @@ export default function ConnectionPage() {
     <Box sx={{ minHeight: '100vh', bgcolor: '#f8f8f8', position: 'relative' }}>
       {/* Header + avatar */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
-        <Typography variant="h6" sx={{ mx: 'auto', color: 'black', fontWeight: 'bolder', textAlign: 'center' }}>OptimedDynamics</Typography>
+        <Typography variant="h6" sx={{ mx: 'auto', color: 'black', color: 'black', fontWeight: 'bolder', textAlign: 'center' }}>OptimedDynamics</Typography>
         <Box sx={{ position: 'absolute', top: 16, right: 32 }}>
           <Avatar sx={{ bgcolor: '#fff', border: '2px solid #171717', width: 48, height: 48 }}>
             <PersonIcon sx={{ color: '#171717', fontSize: 36 }} />

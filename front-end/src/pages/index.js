@@ -1,105 +1,115 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, List, ListItem, ListItemText, Box } from '@mui/material';
+import React from 'react';
+import { Box, Typography, Button, Paper, List, ListItem, ListItemButton, ListItemText, TextField, Avatar, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 
-const API_URL = 'http://localhost:4000'; // Change si ton API Express tourne sur un autre port
+const menuItems = [
+  { label: 'Fauteuils électriques', img: '/fauteuil-roulant-express.jpg' },
+  { label: 'Fauteuils roulants', img: '/Fauteuil roulant.jpg' },
+  { label: 'Fauteuils sportifs', img: '/1736725815_MPIC001338_Pro_Basket.jpg' },
+  { label: 'Fournisseur', img: null },
+];
+
+const imageGallery = [
+  {
+    src: '/fauteuil-roulant-express.jpg',
+    alt: 'Fauteuil roulant express',
+    label: 'Fauteuil roulant express',
+  },
+  {
+    src: '/Fauteuil roulant.jpg',
+    alt: 'Fauteuil roulant',
+    label: 'Fauteuil roulant',
+  },
+  {
+    src: '/1736725815_MPIC001338_Pro_Basket.jpg',
+    alt: 'Fauteuil basket',
+    label: 'Fauteuil basket',
+  },
+];
 
 export default function Home() {
-  const [libelle, setLibelle] = useState('');
-  const [famille, setFamille] = useState('');
-  const [result, setResult] = useState(null);
-  const [familleList, setFamilleList] = useState([]);
-
-  // Recherche par libellé
-  const handleSearchLibelle = async () => {
-    setResult(null);
-    if (!libelle) return;
-    const res = await fetch(`${API_URL}/piece?libelle=${encodeURIComponent(libelle)}`);
-    if (res.ok) {
-      setResult(await res.json());
-    } else {
-      setResult({ error: "Aucune pièce trouvée pour ce libellé." });
-    }
-  };
-
-  // Recherche par famille
-  const handleSearchFamille = async () => {
-    setFamilleList([]);
-    if (!famille) return;
-    const res = await fetch(`${API_URL}/pieces?famille=${encodeURIComponent(famille)}`);
-    if (res.ok) {
-      setFamilleList(await res.json());
-    } else {
-      setFamilleList([]);
-    }
-  };
+  const [selected, setSelected] = React.useState(0);
+  const [categorie, setCategorie] = React.useState('libellé');
+  const selectedImage = menuItems[selected].img;
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>Recherche Pièce Détachée</Typography>
-
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h6">Par libellé</Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', background: '#fff', borderRadius: 2, boxShadow: 1, p: 1, maxWidth: 500 }}>
-          <TextField
-            label="Libellé"
-            value={libelle}
-            onChange={e => setLibelle(e.target.value)}
-            size="small"
-            sx={{ flex: 1, background: '#fff' }}
-            InputProps={{ style: { color: '#171717', background: '#fff' } }}
-            InputLabelProps={{ style: { color: '#171717' } }}
-          />
-          <Button
-            variant="contained"
-            onClick={handleSearchLibelle}
-            sx={{ ml: 2, height: '40px', minWidth: '120px', fontWeight: 'bold', background: '#171717', color: '#fff', boxShadow: 'none', '&:hover': { background: '#333' } }}
-          >
-            Rechercher
-          </Button>
+    <Box sx={{ minHeight: '100vh', bgcolor: '#f8f8f8', position: 'relative' }}>
+      {/* Header + avatar */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
+        <Typography variant="h6" sx={{ mx: 'auto', color: 'black', fontWeight: 'bolder', textAlign: 'center' }}>OptimedDynamics</Typography>
+        <Box sx={{ position: 'absolute', top: 16, right: 32 }}>
+          <Avatar sx={{ bgcolor: '#fff', border: '2px solid #171717', width: 48, height: 48 }}>
+            <PersonIcon sx={{ color: '#171717', fontSize: 36 }} />
+          </Avatar>
         </Box>
-        {result && (
-          <Box sx={{ mt: 2 }}>
-            {result.error ? (
-              <Typography color="error">{result.error}</Typography>
-            ) : (
-              <pre style={{ background: '#f5f5f5', padding: 10, borderRadius: 4 }}>
-                {JSON.stringify(result, null, 2)}
-              </pre>
-            )}
-          </Box>
-        )}
       </Box>
 
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h6">Par famille</Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', background: '#fff', borderRadius: 2, boxShadow: 1, p: 1, maxWidth: 500 }}>
-          <TextField
-            label="Famille"
-            value={famille}
-            onChange={e => setFamille(e.target.value)}
-            size="small"
-            sx={{ flex: 1, background: '#fff' }}
-            InputProps={{ style: { color: '#171717', background: '#fff' } }}
-            InputLabelProps={{ style: { color: '#171717' } }}
-          />
-          <Button
-            variant="contained"
-            onClick={handleSearchFamille}
-            sx={{ ml: 2, height: '40px', minWidth: '120px', fontWeight: 'bold', background: '#171717', color: '#fff', boxShadow: 'none', '&:hover': { background: '#333' } }}
-          >
-            Rechercher
-          </Button>
-        </Box>
-        {familleList.length > 0 && (
-          <List sx={{ mt: 2, background: '#f5f5f5', borderRadius: 2 }}>
-            {familleList.map((lib, idx) => (
-              <ListItem key={idx}>
-                <ListItemText primary={lib} />
+      {/* Menu + contenu principal */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', mt: 4 }}>
+        {/* Menu vertical */}
+        <Paper elevation={0} sx={{ bgcolor: '#ededed', minWidth: 180, mr: 2, p: 1 }}>
+          <List>
+            {menuItems.map((item, idx) => (
+              <ListItem key={item.label} disablePadding>
+                <ListItemButton
+                  selected={selected === idx}
+                  onClick={() => setSelected(idx)}
+                  sx={{
+                    bgcolor: selected === idx ? '#3f51b5' : 'inherit',
+                    color: selected === idx ? '#fff' : '#171717',
+                    fontWeight: selected === idx ? 'bold' : 'normal',
+                    borderRadius: 1,
+                    mb: 1,
+                  }}
+                >
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
               </ListItem>
             ))}
           </List>
-        )}
+        </Paper>
+
+        {/* Zone centrale */}
+        <Box sx={{ flex: 1, ml: 2 }}>
+          {/* Barre de recherche et catégorie */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 2, maxWidth: 600 }}>
+            <FormControl variant="filled" size="small" sx={{ bgcolor: '#e5e3e3', minWidth: 180, maxWidth: 180 }}>
+              <InputLabel id="categorie-label" sx={{ color: '#171717' }}>Catégorie</InputLabel>
+              <Select
+                labelId="categorie-label"
+                value={categorie}
+                onChange={e => setCategorie(e.target.value)}
+                disableUnderline
+                sx={{ background: '#e5e3e3', color: '#171717' }}
+              >
+                <MenuItem value="libellé">Libellé</MenuItem>
+                <MenuItem value="famille">Famille</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              label="Recherche..."
+              variant="filled"
+              size="small"
+              sx={{ bgcolor: '#e5e3e3', width: '170%' }}
+              InputProps={{ disableUnderline: true, style: { background: '#e5e3e3' } }}
+              InputLabelProps={{ style: { color: '#171717' } }}
+            />
+          </Box>
+          {/* Image fauteuil */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, minHeight: 300 }}>
+            {selectedImage && (
+              <img
+                src={selectedImage}
+                alt={menuItems[selected].label}
+                style={{ maxWidth: '100%', maxHeight: '420px', borderRadius: 8, boxShadow: '0 2px 12px #0001', transition: '0.2s' }}
+              />
+            )}
+          </Box>
+        </Box>
       </Box>
-    </Container>
+
+      {/* Mentions légales */}
+      <Typography variant="body2" sx={{ position: 'absolute', bottom: 24, right: 48, fontWeight: 'bold' }}>Mentions légales</Typography>
+    </Box>
   );
 }
